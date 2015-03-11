@@ -26,6 +26,7 @@ import ssim
 #import ssim_theano
 import psnr
 import niqe
+import reco
 
 def img_greyscale(img):
     return 0.299 * img[:,:,0] + 0.587 * img[:,:,1] + 0.114 * img[:,:,2]
@@ -65,22 +66,27 @@ if ".yuv" in ref_file:
 
 else:
     # Inputs are image files
-    # ref = img_greyscale( scipy.misc.imread(ref_file) ).astype(numpy.float32)
-    # dist = img_greyscale( scipy.misc.imread(dist_file) ).astype(numpy.float32)
     ref = scipy.misc.imread(ref_file, flatten=True).astype(numpy.float32)
     dist = scipy.misc.imread(dist_file, flatten=True).astype(numpy.float32)
 
     width, height = ref.shape[1], ref.shape[0]
     print "Comparing %s to %s, resolution %d x %d" % (ref_file, dist_file, width, height)
+
     vifp_value = vifp.vifp_mscale(ref, dist)
     print "VIFP=%f" % (vifp_value)
-    #import timeit
-    #print timeit.timeit('ssim_value = ssim_theano.ssim(ref, dist)', setup='import ssim_theano; from __main__ import ref, dist', number=100)
+
     ssim_value = ssim.ssim_exact(ref/255, dist/255)
     print "SSIM=%f" % (ssim_value)
-    ssim_value2 = ssim.ssim(ref/255, dist/255)
-    print "SSIM approx=%f" % (ssim_value2)
+
+    # FIXME this is buggy, disable for now
+    # ssim_value2 = ssim.ssim(ref/255, dist/255)
+    # print "SSIM approx=%f" % (ssim_value2)
+
     psnr_value = psnr.psnr(ref, dist)
     print "PSNR=%f" % (psnr_value)
-    niqe_value = niqe.niqe(dist / 255.0)
-    print "NIQE=%f" % (niqe_value)
+
+    # niqe_value = niqe.niqe(dist/255)
+    # print "NIQE=%f" % (niqe_value)
+
+    reco_value = reco.reco(ref/255, dist/255)
+    print "RECO=%f" % (reco_value)
