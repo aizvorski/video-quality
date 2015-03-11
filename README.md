@@ -1,20 +1,27 @@
-Video Quality Metrics
-=============
+# Video Quality Metrics
 
 Video quality metrics, reference implementation in python, with GPU optimizations and C versions as time permits.
 
 - VIF-P, Visual Information Fidelity: implemented
 - SSIM, Structural Similarity Metric: implemented
 - PSNR, Peak Signal to Noise Ratio: implemented
-- RECO, Relative Polar Edge Coherence: planned
+- RECO, Relative Polar Edge Coherence: implemented
 - MS-SSIM, MultiScale Structural Similarity Metric: planned
 - 3SSIM, 3-Component Structural Similarity Metric: planned
 - VQUAD-HD: planned
 - VQM: maybe
-- UIQ, Universal Image Quality
-- MSSIM, Motion SSIM
+- UIQ, Universal Image Quality: maybe
+- MSSIM, Motion SSIM: maybe
 
-References:
+## Example
+
+Run the demo/jpg_demo.py script, which will compress lena.png with JPEG at every quality setting 0-100, and plot all metric values vs quality setting and vs file size.
+
+![JPEG Metric vs Quality Setting](demo/jpg_demo_quality.png)
+
+![JPEG Metric vs File Size](demo/jpg_demo_size.png)
+
+## References
 
 H. R. Sheikh and A. C. Bovik, “Image information and visual quality,” Image Processing, IEEE Transactions on, vol. 15, no. 2, pp. 430–444, 2006.
 
