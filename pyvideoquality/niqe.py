@@ -149,7 +149,7 @@ def niqe(img):
                 block_features = compute_features( img_norm[block_col*block_size:(block_col+1)*block_size, block_row*block_size:(block_row+1)*block_size] )
                 scale_features.append(block_features)
         # print "len(scale_features)=%f" %(len(scale_features))
-        if features == None:
+        if features is None:
             features = numpy.vstack(scale_features)
             # print features.shape
         else:
