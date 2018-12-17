@@ -80,7 +80,7 @@ def generalized_gaussian_ratio_inverse(k):
         #print "%f %f %f" % (k, ((3-4*k)/(4*c1)), c2**2 + 4*c3*log((3-4*k)/(4*c1)) )
         return (1/(2*c3)) * (c2 - math.sqrt(c2**2 + 4*c3*math.log((3-4*k)/(4*c1))))
     else:
-        print "warning: GGRF inverse of %f is not defined" %(k)
+        print("warning: GGRF inverse of %f is not defined" %(k))
         return numpy.nan
 
 """
