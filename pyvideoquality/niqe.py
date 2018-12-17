@@ -38,6 +38,9 @@ from scipy.ndimage.filters import gaussian_filter
 import scipy.misc
 import scipy.io
 import skimage.transform
+import os
+
+BASE_PATH = os.path.dirname(os.path.abspath(__file__)) + "/"
 
 """
 Generalized Gaussian distribution estimation.
@@ -124,7 +127,7 @@ def normalize_image(img, sigma=7/6):
 
 
 def niqe(img):
-    model_mat = scipy.io.loadmat('modelparameters.mat')
+    model_mat = scipy.io.loadmat(BASE_PATH + 'modelparameters.mat')
     model_mu = model_mat['mu_prisparam']
     model_cov = model_mat['cov_prisparam']
 
