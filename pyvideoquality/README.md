@@ -14,6 +14,9 @@ Video quality metrics, reference implementation in python, with GPU optimization
 - UIQ, Universal Image Quality: maybe
 - MSSIM, Motion SSIM: maybe
 
+## Motivations:
+- This is forked to provide a more suitable structure for a project (e.g. to import using pip).
+
 ## Example
 
 Run the demo/jpg_demo.py script, which will compress lena.png with JPEG at every quality setting 0-100, and plot all metric values vs quality setting and vs file size.

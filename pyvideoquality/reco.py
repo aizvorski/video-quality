@@ -53,11 +53,12 @@ def Laguerre_Gauss_Circular_Harmonic_1_0(size, sigma):
     l10 = - (1 / (sigma * sqrt(pi))) * numpy.exp( -r*r / (2*sigma*sigma)) * sqrt(r*r/(sigma*sigma)) * numpy.exp( -1j * gamma )
     return l10
 
-"""
-Polar edge coherence map
-Same size as source image
-"""
+
 def pec(img):
+    """
+    Polar edge coherence map
+    Same size as source image
+    """
     # TODO scale parameter should depend on resolution
     l10 = Laguerre_Gauss_Circular_Harmonic_1_0(17, 2)
     l30 = Laguerre_Gauss_Circular_Harmonic_3_0(17, 2)
@@ -66,11 +67,12 @@ def pec(img):
     pec_map = - (numpy.absolute(y30) / numpy.absolute(y10)) * numpy.cos( numpy.angle(y30) - 3 * numpy.angle(y10) )
     return pec_map
 
-"""
-Edge coherence metric
-Just one number summarizing typical edge coherence in this image.
-"""
+
 def eco(img):
+    """
+    Edge coherence metric
+    Just one number summarizing typical edge coherence in this image.
+    """
     l10 = Laguerre_Gauss_Circular_Harmonic_1_0(17, 2)
     l30 = Laguerre_Gauss_Circular_Harmonic_3_0(17, 2)
     y10 = scipy.ndimage.filters.convolve(img, numpy.real(l10)) + 1j * scipy.ndimage.filters.convolve(img, numpy.imag(l10))
@@ -82,7 +84,19 @@ def eco(img):
 Relative edge coherence
 Ratio of ECO
 """
-def reco(img1, img2):
-    C = 1 # TODO what is a good value?
+def reco(img1, img2, C=1):
+    """Relative Edge Coherence
+    
+    Arguments:
+        img1 {np.ndarray} -- First image
+        img2 {np.ndarray} -- Second image
+    
+    Keyword Arguments:
+        C {int} -- Coherence value (default: {1})
+    
+    Returns:
+        reco {double} -- [relative edge coherence value.]
+    """
+
     return (eco(img2) + C) / (eco(img1) + C)
 
