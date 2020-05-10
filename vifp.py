@@ -110,6 +110,8 @@ def vifp_mscale(ref, dist):
         
     vifp = num/den
 
-    return vifp
-
+    if numpy.isnan(vifp):
+        return 1.0
+    else:
+        return vifp
 
