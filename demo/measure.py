@@ -23,7 +23,6 @@ import scipy.misc
 
 import vifp
 import ssim
-#import ssim_theano
 import psnr
 import niqe
 import reco

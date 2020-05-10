@@ -38,6 +38,9 @@ from scipy.ndimage.filters import gaussian_filter
 import scipy.misc
 import scipy.io
 import skimage.transform
+import os
+
+BASE_PATH = os.path.dirname(os.path.abspath(__file__)) + "/"
 
 """
 Generalized Gaussian distribution estimation.
@@ -80,7 +83,7 @@ def generalized_gaussian_ratio_inverse(k):
         #print "%f %f %f" % (k, ((3-4*k)/(4*c1)), c2**2 + 4*c3*log((3-4*k)/(4*c1)) )
         return (1/(2*c3)) * (c2 - math.sqrt(c2**2 + 4*c3*math.log((3-4*k)/(4*c1))))
     else:
-        print "warning: GGRF inverse of %f is not defined" %(k)
+        print("warning: GGRF inverse of %f is not defined" %(k))
         return numpy.nan
 
 """
@@ -124,7 +127,7 @@ def normalize_image(img, sigma=7/6):
 
 
 def niqe(img):
-    model_mat = scipy.io.loadmat('modelparameters.mat')
+    model_mat = scipy.io.loadmat(BASE_PATH + 'modelparameters.mat')
     model_mu = model_mat['mu_prisparam']
     model_cov = model_mat['cov_prisparam']
 
@@ -146,7 +149,7 @@ def niqe(img):
                 block_features = compute_features( img_norm[block_col*block_size:(block_col+1)*block_size, block_row*block_size:(block_row+1)*block_size] )
                 scale_features.append(block_features)
         # print "len(scale_features)=%f" %(len(scale_features))
-        if features == None:
+        if features is None:
             features = numpy.vstack(scale_features)
             # print features.shape
         else:

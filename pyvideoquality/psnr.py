@@ -16,21 +16,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import theano
-from theano import tensor
+import numpy
+import math
 
-# declare two symbolic floating-point scalars
-img1 = tensor.fmatrix()
-img2 = tensor.fmatrix()
+def psnr(img1, img2):
+    """Calculate the Peak Signal to Noise Ratio
+    
+    Arguments:
+        img1 {np.ndarray} -- The first image
+        img2 {np.ndarray} -- The second image
+    
+    Returns:
+        psnr {double} -- The peak signal to noise ratio
+    """
 
-s1 = img1.sum()
-s2 = img2.sum()
-ss = (img1 * img1).sum() + (img2 * img2).sum()
-s12 = (img1 * img2).sum()
-vari = ss - s1*s1 - s2*s2
-covar = s12 - s1*s2
-ssim_c1 = .01*.01
-ssim_c2 = .03*.03
-ssim_value = (2*s1*s2 + ssim_c1) * (2*covar + ssim_c2) / ((s1*s1 + s2*s2 + ssim_c1) * (vari + ssim_c2))
-
-ssim = theano.function([img1, img2], ssim_value)
+    mse = numpy.mean( (img1 - img2) ** 2 )
+    if mse == 0:
+        return 100
+    PIXEL_MAX = 255.0
+    return 20 * math.log10(PIXEL_MAX / math.sqrt(mse))

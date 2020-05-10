@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import numpy
 from scipy.ndimage import gaussian_filter
-
+from warnings import warn
 from numpy.lib.stride_tricks import as_strided as ast
 
 """
@@ -36,6 +36,19 @@ def block_view(A, block=(3, 3)):
 
 
 def ssim(img1, img2, C1=0.01**2, C2=0.03**2):
+    """SSIM
+    
+    Arguments:
+        img1 {np.ndarray} -- First image
+        img2 {np.ndarray} -- Second image
+    
+    Keyword Arguments:
+        C1 {double} -- [description] (default: {0.01**2})
+        C2 {double} -- [description] (default: {0.03**2})
+    
+    Returns:
+        ssim {double} -- The value of the ssim for the images
+    """
 
     bimg1 = block_view(img1, (4,4))
     bimg2 = block_view(img2, (4,4))
@@ -50,8 +63,10 @@ def ssim(img1, img2, C1=0.01**2, C2=0.03**2):
     ssim_map =  (2*s1*s2 + C1) * (2*covar + C2) / ((s1*s1 + s2*s2 + C1) * (vari + C2))
     return numpy.mean(ssim_map)
 
-# FIXME there seems to be a problem with this code
+
 def ssim_exact(img1, img2, sd=1.5, C1=0.01**2, C2=0.03**2):
+    # FIXME there seems to be a problem with this code
+    warn("This code doesn't function correctly.")
 
     mu1 = gaussian_filter(img1, sd)
     mu2 = gaussian_filter(img2, sd)
