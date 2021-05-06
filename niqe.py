@@ -1,31 +1,27 @@
+
 from __future__ import division
+from __future__ import print_function
 
 """
 Video Quality Metrics
 Copyright (c) 2015 Alex Izvorski <aizvorski@gmail.com>
-
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 """
 NIQE: Natural Image Quality Evaluator
-
 An excellent no-reference image quality metric.  
-
 Code below is roughly similar on Matlab code graciously provided by Anish Mittal, but is written from scratch (since most of the Matlab functions there don't have numpy equivalents).
 Training the model is not implemented yet, so we rely on pre-trained model parameters in file modelparameters.mat.
-
 Cite:
 Mittal, Anish, Rajiv Soundararajan, and Alan C. Bovik. "Making a completely blind image quality analyzer." Signal Processing Letters, IEEE 20.3 (2013): 209-212.
 """
@@ -41,7 +37,6 @@ import skimage.transform
 
 """
 Generalized Gaussian distribution estimation.
-
 Cite: 
 Dominguez-Molina, J. Armando, et al. "A practical procedure to estimate the shape parameter in the generalized Gaussian distribution.", 
   available through http://www. cimat. mx/reportes/enlinea/I-01-18_eng. pdf 1 (2001).
@@ -80,7 +75,7 @@ def generalized_gaussian_ratio_inverse(k):
         #print "%f %f %f" % (k, ((3-4*k)/(4*c1)), c2**2 + 4*c3*log((3-4*k)/(4*c1)) )
         return (1/(2*c3)) * (c2 - math.sqrt(c2**2 + 4*c3*math.log((3-4*k)/(4*c1))))
     else:
-        print "warning: GGRF inverse of %f is not defined" %(k)
+        print("warning: GGRF inverse of %f is not defined" %(k))
         return numpy.nan
 
 """
@@ -146,7 +141,7 @@ def niqe(img):
                 block_features = compute_features( img_norm[block_col*block_size:(block_col+1)*block_size, block_row*block_size:(block_row+1)*block_size] )
                 scale_features.append(block_features)
         # print "len(scale_features)=%f" %(len(scale_features))
-        if features == None:
+        if features is None:
             features = numpy.vstack(scale_features)
             # print features.shape
         else:
@@ -165,3 +160,4 @@ def niqe(img):
 # img = scipy.misc.imread(sys.argv[1], flatten=True).astype(numpy.float)/255.0
 
 # print "NIQE = %f" %(niqe(img))
+
